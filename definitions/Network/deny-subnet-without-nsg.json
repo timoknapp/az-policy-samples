@@ -1,0 +1,26 @@
+{
+    "properties": {
+        "displayName": "Enforce NSG on subnets",
+        "description": "This policy denies the creation of subnets that do not have a Network Security Group associated.",
+        "mode": "All",
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Network/virtualNetworks/subnets"
+                    },
+                    {
+                        "not": {
+                            "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id",
+                            "exists": "true"
+                        }
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deny"
+            }
+        }
+    }
+}
